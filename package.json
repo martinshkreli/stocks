@@ -1,5 +1,32 @@
 {
+  "name": "stocks",
+  "license": "UNLICENSED",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "tsx ./src/index.ts",
+    "watch": "tsx watch ./src/index.ts",
+    "build": "tsc",
+    "start:prod": "node ./dist/index.js"
+  },
+  "engines": {
+    "node": ">=v18.2.1"
+  },
   "dependencies": {
-    "express": "^4.18.2"
+    "blessed": "^0.1.81",
+    "date-fns": "^2.29.3",
+    "got": "^12.5.3"
+  },
+  "devDependencies": {
+    "@types/blessed": "^0.1.19",
+    "@types/node": "^18.11.18",
+    "@typescript-eslint/eslint-plugin": "^5.48.0",
+    "@typescript-eslint/parser": "^5.48.0",
+    "eslint": "^8.31.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.1",
+    "tsx": "^3.12.1",
+    "typescript": "^4.9.4"
   }
 }
