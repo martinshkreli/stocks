@@ -1,0 +1,13 @@
+*node_modules*
+*npm-debug*
+*dist*
+.idea
+.DS_Store
+.orig
+*.tmp*
+web/dll/vendor-manifest.json
+yarn.error
+yarn-error.log
+
+logs*
+!logs/.gitkeep
