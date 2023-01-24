@@ -20,8 +20,7 @@ async function grab() {
     const res1 = await fetch(`https://generic709.herokuapp.com/stockc/${singleticker}`)
     let quote;
     try {quote = await res1.json();} 
-    catch (e) {console.log(e);
-      return;};
+    catch (e) {console.log(e);return;};
     if (count % 250 == 0 && count > 1) {
       readline.cursorTo(process.stdout,3,45)
       process.stdout.write(`Data Received: ${count}`);
