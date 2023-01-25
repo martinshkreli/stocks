@@ -52,5 +52,9 @@ module.exports = [
     'VZ',
     'WMT',
     'XOM',
-    'ZM'
+    'ZM',
+    'BTCBUSD',
+    'ETHBUSD',
+    'BNBBUSD',
+    'XMRBUSD'
 ]
