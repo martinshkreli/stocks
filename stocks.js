@@ -1,5 +1,6 @@
 const readline = require('readline');
 const tickers = require('./tickers');
+const cryptoTickers = require('./cryptotickers.js');
 let count = 0, columnwidth = 20, rows = 30;
 let startTime = Date.now();
 let randchars = ['*','%','$','&','@','!','^','~','+','?','/','|','<','>'];
@@ -17,9 +18,14 @@ console.log(" ");
 setInterval(grab, 500);
 async function grab() {
   for (const singleticker of tickers) {
-    const res1 = await fetch(`https://generic709.herokuapp.com/stockc/${singleticker}`)
+    let res1;
+    if (cryptoTickers.includes(singleticker)){
+      res1 = await fetch(`https://api.binance.com/api/v3/avgPrice?symbol=${singleticker}`);
+    } else {
+      res1 = await fetch(`https://generic709.herokuapp.com/stockc/${singleticker}`);
+    }
     let quote;
-    try {quote = await res1.json();} 
+    try {quote = await res1.json();}
     catch (e) {console.log(e);return;};
     if (count % 250 == 0 && count > 1) {
       readline.cursorTo(process.stdout,3,45)
@@ -34,5 +40,5 @@ async function grab() {
     if (!quote) {return;}
     let xposition = 7 + Math.floor(tickers.indexOf(singleticker) / rows) * columnwidth;
     readline.cursorTo(process.stdout,xposition, tickers.indexOf(singleticker) % rows);
-    process.stdout.write(`\x1b[37m${quote.price.toFixed(2)}${randchars[Math.floor(Math.random() * 10)]}`);
+    process.stdout.write(`\x1b[37m${parseInt(quote.price).toFixed(2)}${randchars[Math.floor(Math.random() * 10)]}`);
     count++;}}
