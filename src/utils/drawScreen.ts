@@ -1,10 +1,10 @@
 import readline from 'readline'
 
+import config from '@config'
 import { Ticker } from "@aliases"
 import { ScreenConfigModel } from '@models'
-import config from '@config'
 
-const { SCREEN_ROWS, COLUMN_WIDTH} = config
+const { SCREEN_ROWS, COLUMN_WIDTH } = config
 
 const createDrawScreenFn = ({
     SCREEN_ROWS,

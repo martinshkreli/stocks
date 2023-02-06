@@ -1,9 +1,7 @@
 import * as dotenv from 'dotenv'
-import { ScreenConfigModel, ServerConfigModel } from '@models'
+import { ConfigModel } from '@models'
 
 dotenv.config()
-
-type ConfigModel = ServerConfigModel & ScreenConfigModel
 
 const config: ConfigModel = {
     SERVER_URL: new URL(process.env.SERVER_URL as string),
