@@ -1,4 +1,6 @@
-module.exports = [
+import { Ticker } from '@aliases'
+
+const tickers: Ticker[] = [
     'AAPL',
     'ABBV',
     'BA',
@@ -54,3 +56,5 @@ module.exports = [
     'XOM',
     'ZM'
 ]
+
+export default tickers
