@@ -1,6 +1,6 @@
 import {
-  ServerConfigModel,
-  ScreenConfigModel 
+	ServerConfigModel,
+	ScreenConfigModel 
 } from '@models'
 
 export type ConfigModel = ServerConfigModel & ScreenConfigModel
