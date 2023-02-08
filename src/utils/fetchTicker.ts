@@ -1,11 +1,12 @@
+import axios from 'axios'
 import config from "@config"
 import { Ticker } from "@aliases"
+import { ServerResponseModel } from "@models"
 
 function createFetchTickerFn(url: URL) {
   return async function fetchTicker(ticker: Ticker) {
-    const response = await fetch(`${url}/${ticker}`)
-    const quote = await response.json()
-    return quote
+    const response = await axios.get<ServerResponseModel>(`${url}/${ticker}`)
+    return response.data
   }
 }
 
