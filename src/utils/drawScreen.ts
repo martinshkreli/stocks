@@ -1,7 +1,7 @@
-import readline from "readline"
+import config from "@config"
 import { Ticker } from "@aliases"
 import { ScreenConfigModel } from "@models"
-import config from "@config"
+import { Cursor } from "@utils"
 
 const createDrawScreenFn = ({
     SCREEN_ROWS,
@@ -10,9 +10,9 @@ const createDrawScreenFn = ({
   return function drawScreen(tickers: Ticker[]) {
     for (let i = 0; i < tickers.length; i++) {
       let k = Math.floor(i / SCREEN_ROWS)
-      readline.cursorTo(process.stdout, k * COLUMN_WIDTH, i - SCREEN_ROWS * k)
       let dashes = "-".repeat(COLUMN_WIDTH - tickers[i].length)
-      process.stdout.write(`\x1b[33m${tickers[i]}${dashes}`)
+      const cursor = new Cursor(k * COLUMN_WIDTH, i - SCREEN_ROWS * k)
+      cursor.write(`\x1b[33m${tickers[i]}${dashes}`)
     }
   }
 }
