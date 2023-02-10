@@ -1,12 +1,14 @@
-import readline from 'readline'
-
 import config from "@config"
 import { Ticker } from '@aliases'
 import tickers from "@tickers"
-import { fetchTicker, drawScreen, getRandomElement } from '@utils'
+import { 
+  fetchTicker, 
+  drawScreen, 
+  getRandomChar, 
+  cursors
+} from '@utils'
 
 const startTime = Date.now()
-const randChars = ['*', '%', '$', '&', '@', '!', '^', '~', '+', '?', '/', '|', '<', '>']
 
 let count = 0
 async function grab(tickers: Ticker[]) {
@@ -19,35 +21,33 @@ async function grab(tickers: Ticker[]) {
       return
     }
 
-    if (!quote) {
-      return
-    }
+    if (!quote) return
 
-    if (count % 250 == 0 && count > 1) {
-      readline.cursorTo(process.stdout, 3, 45)
-      process.stdout.write(`Data Received: ${count}`)
-      let endTime = Date.now()
-      readline.cursorTo(process.stdout, 3, 46)
+    if (count % 250 == 0 && count > 1) {      
+      const endTime = Date.now()
       let seconds = parseInt(String(((endTime - startTime) / 1000) % 60), 10 )
       seconds = seconds < 10 ? parseInt(`0${seconds}`) : seconds
-      process.stdout.write(`Time Elapsed: ${(Math.floor(((endTime - startTime) / 1000) / 60))}:${seconds}`)
-      readline.cursorTo(process.stdout, 3, 47)
-      process.stdout.write(`Rate: ${parseInt( String(count / ((endTime - startTime) / 1000)), 10)}x`)
+
+      cursors.dataReceived.write(`Data Received: ${count}`)
+      cursors.timeElapsed.write(`Time Elapsed: ${(Math.floor(((endTime - startTime) / 1000) / 60))}:${seconds}`)
+      cursors.rate.write(`Rate: ${parseInt( String(count / ((endTime - startTime) / 1000)), 10)}x`)
     }
 
-    let xPosition = 7 + Math.floor(tickers.indexOf(ticker) / config.SCREEN_ROWS) * config.COLUMN_WIDTH
-    readline.cursorTo(process.stdout, xPosition, tickers.indexOf(ticker) % config.SCREEN_ROWS)
-    process.stdout.write(`\x1b[37m${quote.price.toFixed(2)}${getRandomElement(randChars)}`)
+    const xPosition = 7 + Math.floor(tickers.indexOf(ticker) / config.SCREEN_ROWS) * config.COLUMN_WIDTH
+    const yPosition = tickers.indexOf(ticker) % config.SCREEN_ROWS
+    cursors.quotePrice
+      .setXPosition(xPosition)
+      .setYPosition(yPosition)
+      .write(`\x1b[37m${quote.price.toFixed(2)}${getRandomChar()}`)
+
     count++
   }
 }
 
 console.clear()
 drawScreen(tickers)
+cursors.generic.write("")
 
-readline.cursorTo(process.stdout, 0, 40)
-console.log(" ")
-
-const interval = setInterval(() => { 
+setInterval(() => { 
   grab(tickers)
 }, config.REFRESH_RATE_MILLISECONDS)
