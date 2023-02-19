@@ -1,47 +1,34 @@
 import config from "@config"
-import { Ticker } from '@aliases'
 import tickers from "@tickers"
-import { 
-  fetchTicker, 
-  drawScreen, 
-  getRandomChar, 
-  cursors
-} from '@utils'
+import { Ticker } from '@aliases'
+import { QuoteModel } from '@models'
+import { fetchTicker, drawScreen, getRandomChar, cursors } from '@utils'
 
 const startTime = Date.now()
-
-let count = 0
+let count = tickers.length
 async function grab(tickers: Ticker[]) {
-  for (const ticker of tickers) {
-    let quote
-    try {
-      quote = await fetchTicker(ticker)
-    } catch (err) { 
-      console.error(err)
-      return
-    }
+  const promises: Promise<QuoteModel>[] = tickers.map(async (ticker) => ({ ticker, ...await fetchTicker(ticker) }))
+  const quotes = await Promise.all(promises)
 
-    if (!quote) return
+  if (!quotes || quotes.length === 0) return
 
-    if (count % 250 == 0 && count > 1) {      
-      const endTime = Date.now()
-      let seconds = parseInt(String(((endTime - startTime) / 1000) % 60), 10 )
-      seconds = seconds < 10 ? parseInt(`0${seconds}`) : seconds
+  const endTime = Date.now()
+  let seconds = parseInt(String(((endTime - startTime) / 1000) % 60), 10 )
+  seconds = seconds < 10 ? parseInt(`0${seconds}`) : seconds
+  cursors.dataReceived.write(`Data Received: ${count}`)
+  cursors.timeElapsed.write(`Time Elapsed: ${(Math.floor(((endTime - startTime) / 1000) / 60))}:${seconds}`)
+  cursors.rate.write(`Rate: ${parseInt( String(count / ((endTime - startTime) / 1000)), 10)}x`)
 
-      cursors.dataReceived.write(`Data Received: ${count}`)
-      cursors.timeElapsed.write(`Time Elapsed: ${(Math.floor(((endTime - startTime) / 1000) / 60))}:${seconds}`)
-      cursors.rate.write(`Rate: ${parseInt( String(count / ((endTime - startTime) / 1000)), 10)}x`)
-    }
-
-    const xPosition = 7 + Math.floor(tickers.indexOf(ticker) / config.SCREEN_ROWS) * config.COLUMN_WIDTH
-    const yPosition = tickers.indexOf(ticker) % config.SCREEN_ROWS
+  quotes.forEach(quote => {
+    const xPosition = 7 + Math.floor(tickers.indexOf(quote.ticker) / config.SCREEN_ROWS) * config.COLUMN_WIDTH
+    const yPosition = tickers.indexOf(quote.ticker) % config.SCREEN_ROWS
     cursors.quotePrice
       .setXPosition(xPosition)
       .setYPosition(yPosition)
       .write(`\x1b[37m${quote.price.toFixed(2)}${getRandomChar()}`)
 
     count++
-  }
+  })
 }
 
 console.clear()
