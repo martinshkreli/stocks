@@ -1,5 +1,11 @@
 # Using "Stocks", the real-time terminal-based quote monitor
-Adjust line 17 for the refresh rate in milliseconds. The default is 500.
+
+# Instructions
+1. rename ```.env.example``` to ```.env```
+2. ```npm install```
+3. ```npm start```
+
+Adjust the ```REFRESH_RATE_MILLISECONDS``` in the .env file. The default is 500.
 
 ##
 Planned upgrades:
