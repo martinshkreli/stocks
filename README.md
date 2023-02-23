@@ -1,5 +1,6 @@
 # Using "Stocks", the real-time terminal-based quote monitor
-Adjust line 17 for the refresh rate in milliseconds. The default is 500.
+
+Adjust line `5` for the refresh rate in milliseconds. The default is 500.
 
 ##
 Planned upgrades:
