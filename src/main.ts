@@ -1,8 +1,8 @@
-import config from "@config"
-import tickers from "@tickers"
-import { Ticker } from '@aliases'
-import { QuoteModel } from '@models'
-import { fetchTicker, drawScreen, getRandomChar, cursors } from '@utils'
+import config from "~/config"
+import tickers from "~/tickers"
+import { Ticker } from '~/aliases'
+import { QuoteModel } from '~/models'
+import { fetchTicker, drawScreen, getRandomChar, cursors } from '~/utils'
 
 const startTime = Date.now()
 let count = tickers.length
@@ -37,4 +37,4 @@ cursors.generic.write("")
 
 setInterval(() => { 
   grab(tickers)
-}, config.REFRESH_RATE_MILLISECONDS)
+}, config.REFRESH_RATE_IN_MILLISECONDS)

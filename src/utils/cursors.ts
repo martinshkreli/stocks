@@ -1,4 +1,4 @@
-import { Cursor } from "@utils"
+import { Cursor } from "~/utils"
 
 const dataReceived = new Cursor(3, 45)
 const timeElapsed = new Cursor(3, 46)

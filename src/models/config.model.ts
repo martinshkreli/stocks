@@ -1,6 +1,6 @@
 import {
 	ServerConfigModel,
 	ScreenConfigModel 
-} from '@models'
+} from '~/models'
 
 export type ConfigModel = ServerConfigModel & ScreenConfigModel

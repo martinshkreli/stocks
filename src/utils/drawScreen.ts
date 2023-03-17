@@ -1,7 +1,7 @@
-import config from "@config"
-import { Ticker } from "@aliases"
-import { ScreenConfigModel } from "@models"
-import { Cursor } from "@utils"
+import config from "~/config"
+import { Ticker } from "~/aliases"
+import { ScreenConfigModel } from "~/models"
+import { Cursor } from "~/utils"
 
 const createDrawScreenFn = ({
     SCREEN_ROWS,

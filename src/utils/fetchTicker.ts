@@ -1,7 +1,7 @@
 import axios from 'axios'
-import config from "@config"
-import { Ticker } from "@aliases"
-import { ServerResponseModel } from "@models"
+import config from "~/config"
+import { Ticker } from "~/aliases"
+import { ServerResponseModel } from "~/models"
 
 function createFetchTickerFn(url: URL) {
   return async function fetchTicker(ticker: Ticker) {

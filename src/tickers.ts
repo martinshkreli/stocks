@@ -1,4 +1,4 @@
-import { Ticker } from "@aliases"
+import { Ticker } from "~/aliases"
 
 const tickers: Ticker[] = [
   "AAPL",

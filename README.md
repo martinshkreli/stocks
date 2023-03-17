@@ -5,7 +5,7 @@
 2. ```npm install```
 3. ```npm start```
 
-Adjust the ```REFRESH_RATE_MILLISECONDS``` in the .env file. The default is 500.
+Adjust the ```REFRESH_RATE_IN_MILLISECONDS``` in the .env file. The default is 500.
 
 ##
 Planned upgrades:
